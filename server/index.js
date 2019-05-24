@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import React from 'react'
+import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import Layout from '../client/components/Layout/Layout'
 
@@ -8,10 +9,15 @@ const app = express()
 
 const port = process.env.PORT || 3000
 
-app.use(express.static(path.resolve(__dirname, '../dist')))
+app.use(express.static('dist'))
 
-app.get('*', (req, res) => {
-  const jsx = (<Layout />)
+app.get('/*', (req, res) => {
+  const context = {}
+  const jsx = (
+    <StaticRouter context={context} location={req.url}>
+      <Layout />
+    </StaticRouter>
+  )
   const reactDom = renderToString(jsx)
 
   res.status(200).type('html').send(htmlTemplate(reactDom))
@@ -32,7 +38,7 @@ const htmlTemplate = reactDom => {
     
     <body>
         <div id="root">${reactDom}</div>
-        <script src="./app.bundle.js"></script>
+        <script src="./client.js"></script>
     </body>
     </html>
   `

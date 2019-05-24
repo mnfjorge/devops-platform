@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
-import * as serviceWorker from './serviceWorker'
 
-ReactDOM.hydrate(<Layout />, document.getElementById('root'))
-
-serviceWorker.unregister()
+ReactDOM.hydrate(
+  <Router>
+    <Layout />
+  </Router>
+  , document.getElementById('root'))

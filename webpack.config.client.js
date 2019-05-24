@@ -1,8 +1,10 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyWebPackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './client/index.js',
+  entry: {
+    client: './client/index.js'
+  },
+  target: 'web',
   module: {
     rules: [
       {
@@ -18,23 +20,12 @@ module.exports = {
         use: {
           loader: 'css-loader'
         }
-      },
-      {
-        test: /\.(html)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'html-loader'
-        }
       }
     ]
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: './public/index.html',
-      filename: './index.html'
-    }),
     new CopyWebPackPlugin([
-      { from: 'public', to: '', ignore: 'index.html' }
+      { from: 'public', to: '', ignore: '*.html' }
     ])
   ]
 }
