@@ -8,17 +8,22 @@
     "build:client": "webpack --mode production --config webpack.config.client.js",
     "build:server": "webpack --mode production --config webpack.config.server.js",
     "dev": "npm-run-all -p dev:server dev:watch-client dev:watch-server",
-    "dev:server": "nodemon --watch dist dist/server.js",
+    "dev:server": "nodemon --exec 'node -r dotenv/config' --watch dist dist/server.js",
     "dev:watch-client": "webpack --mode development --watch --config webpack.config.client.js",
     "dev:watch-server": "webpack --mode development --watch --config webpack.config.server.js",
     "test": "jest"
   },
   "dependencies": {
+    "dotenv": "^8.0.0",
+    "express-session": "^1.16.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",

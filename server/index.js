@@ -4,14 +4,26 @@ import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import Layout from '../client/components/Layout/Layout'
+import auth from './auth'
 
 const app = express()
 
 const port = process.env.PORT || 3000
 
+const authenticated = (req, res, next) => {
+  if (req.user) {
+    next()
+    return
+  }
+
+  res.redirect('/auth/google')
+}
+
+auth(app)
+
 app.use(express.static('dist'))
 
-app.get('/*', (req, res) => {
+app.get('/*', authenticated, (req, res) => {
   const context = {}
   const jsx = (
     <StaticRouter context={context} location={req.url}>
