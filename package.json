@@ -40,9 +40,6 @@
     "webpack-dev-server": "^3.4.1",
     "webpack-node-externals": "^1.7.2"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
