@@ -1,9 +1,13 @@
 import passport from 'passport'
 import { Strategy } from 'passport-google-oauth20'
 import session from 'express-session'
+import * as redis from 'connect-redis'
+
+const RedisStore = redis(session)
+const sessionStore = new RedisStore({ url: process.env.REDIS_URL })
 
 export default app => {
-  app.use(session({ secret: 'ok ok ok', resave: false, saveUninitialized: true }))
+  app.use(session({ store: sessionStore, secret: 'ok ok ok', resave: false, saveUninitialized: true }))
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -16,8 +20,8 @@ export default app => {
   })
 
   passport.use(new Strategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK,
     scope: ['profile', 'email']
   }, (accessToken, refreshToken, profile, done) => {
