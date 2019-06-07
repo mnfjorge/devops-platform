@@ -1,7 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+redis/
+
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -11,6 +13,7 @@
 # production
 /build
 /dist
+/src/dist
 
 # misc
 .DS_Store
