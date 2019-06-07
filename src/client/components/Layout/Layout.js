@@ -1,3 +1,4 @@
+import { hot, setConfig } from 'react-hot-loader'
 import React from 'react'
 import { NavLink, Switch, Route, Redirect } from 'react-router-dom'
 import Home from '../Home/Home'
@@ -6,7 +7,7 @@ import ProjectsDetails from '../Projects/Details/ProjectsDetails';
 
 import './Layout.css'
 
-export default function Layout() {
+const Layout = () => {
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,3 +44,7 @@ export default function Layout() {
     </div>
   )
 }
+
+setConfig({ logLevel: 'debug' })
+
+export default hot(module)(Layout)

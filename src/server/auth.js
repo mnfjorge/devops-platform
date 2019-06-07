@@ -2,7 +2,7 @@ import passport from 'passport'
 import { Strategy } from 'passport-google-oauth20'
 import session from 'express-session'
 import * as redis from 'connect-redis'
-
+  
 let sessionStore = null
 if (process.env.REDIS_URL) {
   const RedisStore = redis(session)
