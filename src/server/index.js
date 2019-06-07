@@ -3,26 +3,28 @@ import path from 'path'
 import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpack from 'webpack'
-import webpackConfig from '../webpack.config.dev'
 import auth from './auth'
 
 const app = express()
 
-const bundler = webpack(webpackConfig)
-app.use(webpackDevMiddleware(bundler, {
-  filename: webpackConfig.output.filename,
-  publicPath: webpackConfig.output.publicPath,
-  hot: true,
-  stats: {
-    colors: true
-  }
-}))
-app.use(webpackHotMiddleware(bundler, {
-  log: console.log
-}))
+if (process.env.NODE_ENV === 'development') {
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
+  const webpackConfig = require('../webpack.config.dev')
+  const webpack = require('webpack')
+  const bundler = webpack(webpackConfig)
+  app.use(webpackDevMiddleware(bundler, {
+    filename: webpackConfig.output.filename,
+    publicPath: webpackConfig.output.publicPath,
+    hot: true,
+    stats: {
+      colors: true
+    }
+  }))
+  app.use(webpackHotMiddleware(bundler, {
+    log: console.log
+  }))
+}
 
 const port = process.env.PORT || 3000
 
@@ -41,7 +43,7 @@ app.use(express.static('dist'))
 
 app.get('/*', authenticated, (req, res) => {
   const Layout = require('../client/components/Layout/Layout').default
-  
+
   const context = {}
   const jsx = (
     <StaticRouter context={context} location={req.url}>
