@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     client: './client/index.js'
   },
+  devtool: 'inline-source-map',
   target: 'web',
   module: {
     rules: [

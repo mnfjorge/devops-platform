@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     server: './server/index.js'
   },
+  devtool: 'inline-source-map',
   target: 'node',
   externals: [WebPackNodeExternals()],
   module: {
