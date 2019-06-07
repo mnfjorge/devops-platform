@@ -3,8 +3,11 @@ import { Strategy } from 'passport-google-oauth20'
 import session from 'express-session'
 import * as redis from 'connect-redis'
 
-const RedisStore = redis(session)
-const sessionStore = new RedisStore({ url: process.env.REDIS_URL })
+let sessionStore = null
+if (process.env.REDIS_URL) {
+  const RedisStore = redis(session)
+  sessionStore = new RedisStore({ url: process.env.REDIS_URL })
+}
 
 export default app => {
   app.use(session({ store: sessionStore, secret: 'ok ok ok', resave: false, saveUninitialized: true }))
