@@ -50,9 +50,9 @@ export default function ProjectsDetails({ match }) {
         {project.steps.map((item, index) => {
           const size = PROGRESS_SIZE[item.status].toString()
           return (
-            <div className="mb-1">
+            <div className="mb-1" key={index}>
               <p>{item.name}</p>
-              <div className="progress" key={index}>
+              <div className="progress">
                 <div className={["progress-bar", PROGRESS_COLORS[item.status]].join(' ')} style={{ width: size + "%" }} role="progressbar" aria-valuenow={size} aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
